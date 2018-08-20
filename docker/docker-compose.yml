@@ -10,4 +10,4 @@ services:
       MYSQL_USER: dev
       MYSQL_PASSWORD: dev
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    container_name: jpa-demo-db
+    container_name: happy-jpa
