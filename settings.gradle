@@ -1,1 +1,3 @@
 rootProject.name = 'happy-jpa'
+include 'jpa-base'
+
