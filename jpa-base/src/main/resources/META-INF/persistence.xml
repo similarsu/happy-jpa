@@ -9,6 +9,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>net.similarsu.learn.jpa.base.po.User</class>
+        <class>net.similarsu.learn.jpa.base.po.People</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver"
@@ -29,8 +30,10 @@
             <property name="hibernate.hbm2ddl.auto"
                       value="update" />
 
+            <!-- create table with innodb engine -->
             <property name="hibernate.dialect"
-                      value="org.hibernate.dialect.MySQL5Dialect" />
+                      value="org.hibernate.dialect.MySQL55Dialect" />
+
         </properties>
 
     </persistence-unit>
