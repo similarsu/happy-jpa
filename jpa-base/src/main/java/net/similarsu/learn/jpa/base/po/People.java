@@ -74,4 +74,8 @@ public final class People {
     public void setAlive(Boolean alive) {
         this.alive = alive;
     }
+
+    public People(String colorStr) {
+        this.colorStr = colorStr;
+    }
 }

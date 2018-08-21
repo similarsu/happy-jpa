@@ -16,7 +16,7 @@ public class PeopleReopTest extends BaseTest {
 
     @Test
     public void persist(){
-        People people = new People();
+        People people = new People("color");
         people.setName("test");
         people.setHeight(1.80f);
         people.setWeight(170f);
