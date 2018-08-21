@@ -17,6 +17,8 @@ public class People {
     @Transient
     private String colorStr;//field no map
 
+    private Boolean alive;
+
     public Long getId() {
         return id;
     }
@@ -65,4 +67,11 @@ public class People {
         this.birth = birth;
     }
 
+    public Boolean getAlive() {
+        return alive;
+    }
+
+    public void setAlive(Boolean alive) {
+        this.alive = alive;
+    }
 }

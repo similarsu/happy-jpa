@@ -22,10 +22,17 @@ public class PeopleReopTest extends BaseTest {
         people.setWeight(170f);
         people.setColor(Color.WHITE);
         people.setBirth(LocalDate.of(1989,11,2));
+        people.setAlive(false);
         EntityTransaction transaction=entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(people);
         transaction.commit();
+    }
+
+    @Test
+    public void load(){
+        People people=entityManager.find(People.class,1l);
+        assert people.getAlive() == true;
     }
 
 }
