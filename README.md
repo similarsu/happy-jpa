@@ -7,3 +7,10 @@
 ```
 jpa基础相关示例代码，基于hibernate jpa provider
 ```
+
+# 疑问
+## 1、final
+```
+The class must not be declared final.
+but when i declared final, success, why?
+```

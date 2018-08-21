@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity(name = "tbl_people")
-public class People {
+public final class People {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
