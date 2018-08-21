@@ -10,6 +10,7 @@
 
         <class>net.similarsu.learn.jpa.base.po.User</class>
         <class>net.similarsu.learn.jpa.base.po.People</class>
+        <class>net.similarsu.learn.jpa.base.po.Contact</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver"
