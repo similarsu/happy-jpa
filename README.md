@@ -1,27 +1,31 @@
 # 概述
+
 ```
 该工程有jpa-base模块构成
 ```
-
 # jpa-base
+
 ```
 jpa基础相关示例代码，基于hibernate jpa provider
 ```
 
 # 疑问
+
 ## 1、final
+
 ```
 The class must not be declared final.
 but when i declared final, success, why?
 ```
-
 ## 2、 a public or protected, no-argument constructor
+
 ```
 The class must have a public or protected, no-argument constructor.
 it see no affect for use.
 ```
 
 ## 3、启动验证
+
 ```
 1、在persistence.xml 使用validation-mode，可不配置，使用默认值AUTO
         <!--
@@ -35,7 +39,9 @@ compile group: 'org.glassfish', name: 'javax.el', version: '3.0.1-b10'
 ```
 
 ## 4、主键
+
 **单一**
+
 ```
 @Entity
 public class Contact implements Serializable {
@@ -45,8 +51,11 @@ public class Contact implements Serializable {
     ……
 }
 ```
+
 **复合**
+
 使用@EmbeddedId
+
 ```
 public final class LineItemKey implements Serializable {
     private Integer customerOrder;
@@ -84,7 +93,9 @@ public class LineItem {
     ……
 }
 ```
+
 使用@IdClass
+
 ```
 public final class LineItemKey implements Serializable {
     private Integer customerOrder;
@@ -123,5 +134,4 @@ public class LineItem {
     @Id
     private int itemId;
 }
-
 ```
