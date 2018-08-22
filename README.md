@@ -163,6 +163,7 @@ Could not determine type for: net.similarsu.learn.jpa.base.po.ZipCode, at table:
 ```
 
 **@Embeddable**
+
 ```
 @Embeddable
 public class ZipCode {
@@ -180,5 +181,14 @@ public class Address {
     String province;
     ZipCode zipCode;
     String country;
+}
+```
+you can use @column to change map field like below.
+```
+@Embeddable
+public class ZipCode {
+    @Column(name = "zip_code")
+    String zip;
+    String plusFour;
 }
 ```
