@@ -11,6 +11,7 @@
         <class>net.similarsu.learn.jpa.base.po.User</class>
         <class>net.similarsu.learn.jpa.base.po.People</class>
         <class>net.similarsu.learn.jpa.base.po.Contact</class>
+        <class>net.similarsu.learn.jpa.base.po.LineItem</class>
         <!--
          * AUTO 当验证提供程序在类路径上存在时,启用验证(默认).
          * CALLBACK 如果没有可用的验证提供程序,那么启用验证并抛出一个错误.

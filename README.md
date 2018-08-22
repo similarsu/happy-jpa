@@ -33,3 +33,54 @@ it see no affect for use.
 2、同时引入validation provider
 compile group: 'org.glassfish', name: 'javax.el', version: '3.0.1-b10'
 ```
+
+## 4、主键
+** 单一 **
+```
+@Entity
+public class Contact implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    ……
+}
+```
+** 复合 **
+使用@EmbeddedId
+```
+public final class LineItemKey implements Serializable {
+    private Integer customerOrder;
+    private int itemId;
+
+    public LineItemKey() {}
+
+    public LineItemKey(Integer order, int itemId) {
+        this.setCustomerOrder(order);
+        this.setItemId(itemId);
+    }
+
+    @Override
+    public int hashCode() {
+        ……
+    }
+
+    @Override
+    public boolean equals(Object otherOb) {
+        ……
+    }
+
+    @Override
+    public String toString() {
+        ……
+    }
+    /* Getters and setters */
+    ……
+}
+
+@Entity
+public class LineItem {
+    @EmbeddedId
+    private LineItemKey lineItemKey;
+    ……
+}
+```
