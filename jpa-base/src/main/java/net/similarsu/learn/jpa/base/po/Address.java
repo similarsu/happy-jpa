@@ -12,6 +12,7 @@ public class Address {
     String street2;
     String city;
     String province;
+    @Embedded
     ZipCode zipCode;
     String country;
 }

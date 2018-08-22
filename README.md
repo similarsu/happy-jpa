@@ -192,3 +192,25 @@ public class ZipCode {
     String plusFour;
 }
 ```
+
+**@Embedded**
+
+```
+public class ZipCode {
+    String zip;
+    String plusFour;
+}
+
+@Entity
+public class Address {
+    @Id
+    protected long id;
+    String street1;
+    String street2;
+    String city;
+    String province;
+    @Embedded
+    ZipCode zipCode;
+    String country;
+}
+```
