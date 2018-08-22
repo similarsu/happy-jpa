@@ -135,3 +135,29 @@ public class LineItem {
     private int itemId;
 }
 ```
+
+## 内嵌类
+
+**error**
+
+```
+public class ZipCode {
+    String zip;
+    String plusFour;
+}
+
+@Entity
+public class Address {
+    @Id
+    protected long id;
+    String street1;
+    String street2;
+    String city;
+    String province;
+    ZipCode zipCode;
+    String country;
+}
+```
+```
+Could not determine type for: net.similarsu.learn.jpa.base.po.ZipCode, at table: Address
+```
