@@ -35,7 +35,7 @@ compile group: 'org.glassfish', name: 'javax.el', version: '3.0.1-b10'
 ```
 
 ## 4、主键
-** 单一 **
+**单一**
 ```
 @Entity
 public class Contact implements Serializable {
@@ -45,7 +45,7 @@ public class Contact implements Serializable {
     ……
 }
 ```
-** 复合 **
+**复合**
 使用@EmbeddedId
 ```
 public final class LineItemKey implements Serializable {
@@ -83,4 +83,45 @@ public class LineItem {
     private LineItemKey lineItemKey;
     ……
 }
+```
+使用@IdClass
+```
+public final class LineItemKey implements Serializable {
+    private Integer customerOrder;
+    private int itemId;
+
+    public LineItemKey() {}
+
+    public LineItemKey(Integer order, int itemId) {
+        this.setCustomerOrder(order);
+        this.setItemId(itemId);
+    }
+
+    @Override
+    public int hashCode() {
+        ……
+    }
+
+    @Override
+    public boolean equals(Object otherOb) {
+        ……
+    }
+
+    @Override
+    public String toString() {
+        ……
+    }
+    /* Getters and setters */
+    ……
+}
+
+@Entity
+@IdClass(LineItemKey.class)
+public class LineItem {
+    @Id
+    private Integer customerOrder;
+    @Id
+    private int itemId;
+}
+
 ```

@@ -3,7 +3,6 @@ package net.similarsu.learn.jpa.base.po;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-@Embeddable
 public final class LineItemKey implements Serializable {
     private Integer customerOrder;
     private int itemId;

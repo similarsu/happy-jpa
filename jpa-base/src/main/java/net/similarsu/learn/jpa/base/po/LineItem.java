@@ -1,10 +1,12 @@
 package net.similarsu.learn.jpa.base.po;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
+@IdClass(LineItemKey.class)
 public class LineItem {
-    @EmbeddedId
-    private LineItemKey lineItemKey;
+    @Id
+    private Integer customerOrder;
+    @Id
+    private int itemId;
 }
