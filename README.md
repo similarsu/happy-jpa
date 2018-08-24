@@ -237,3 +237,26 @@ public class Address {
 }
 ```
 use @AttributeOverrides to override the field name
+
+**@Embeddable && @Embedded (recommend)**
+
+```
+@Embeddable
+public class ZipCode {
+    String zip;
+    String plusFour;
+}
+
+@Entity
+public class Address {
+    @Id
+    protected long id;
+    String street1;
+    String street2;
+    String city;
+    String province;
+    @Embedded
+    ZipCode zipCode;
+    String country;
+}
+```
