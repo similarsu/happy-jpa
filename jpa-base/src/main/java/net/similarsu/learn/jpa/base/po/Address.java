@@ -1,8 +1,6 @@
 package net.similarsu.learn.jpa.base.po;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Address {
@@ -13,6 +11,12 @@ public class Address {
     String city;
     String province;
     @Embedded
+    @AttributeOverrides(
+            {
+                    @AttributeOverride(name = "zip",column = @Column(name = "zip_code"))
+                    ,@AttributeOverride(name = "plusFour",column = @Column(name = "plus"))
+            }
+    )
     ZipCode zipCode;
     String country;
 }
