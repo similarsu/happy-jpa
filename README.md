@@ -260,3 +260,35 @@ public class Address {
     String country;
 }
 ```
+
+## 继承
+
+### Abstract Entities
+
+```
+@Entity
+public abstract class Employee {
+    @Id
+    protected Integer employeeId;
+    ...
+}
+
+@Entity
+public class FullTimeEmployee extends Employee {
+    protected Integer salary;
+    ...
+}
+
+@Entity
+public class PartTimeEmployee extends Employee {
+    protected Float hourlyWage;
+}
+```
+
+**建表语句**
+
+```
+create table Employee (DTYPE varchar(31) not null, employeeId integer not null, name varchar(255),
+salary integer, hourlyWage float, primary key (employeeId)) engine=InnoDB
+```
+会多生成DTYPE字段，用于鉴别子类（自动插入FullTimeEmployee或PartTimeEmployee）
