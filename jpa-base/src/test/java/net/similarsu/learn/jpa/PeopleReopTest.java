@@ -23,10 +23,7 @@ public class PeopleReopTest extends BaseTest {
         people.setColor(Color.WHITE);
         people.setBirth(LocalDate.of(1989,11,2));
         people.setAlive(false);
-        EntityTransaction transaction=entityManager.getTransaction();
-        transaction.begin();
         entityManager.persist(people);
-        transaction.commit();
     }
 
     @Test

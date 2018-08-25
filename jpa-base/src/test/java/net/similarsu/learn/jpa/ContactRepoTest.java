@@ -18,9 +18,6 @@ public class ContactRepoTest extends BaseTest{
         contact.setEmail("163");
         /*Validator validator=Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<Contact>> violations=validator.validate(contact);*/
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
         entityManager.persist(contact);
-        transaction.commit();
     }
 }
