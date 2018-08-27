@@ -3,7 +3,7 @@ package net.similarsu.learn.jpa.base.po.inheritance.mappedsuperclass;
 import javax.persistence.*;
 
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

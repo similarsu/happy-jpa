@@ -453,3 +453,29 @@ insert into FullTimeEmployee (name, salary) values (?, ?)
 insert into PartTimeEmployee (name, hourlyWage) values (?, ?)
 ```
 
+###JOINED
+
+**Abstract Entities**
+
+```
+create table Employee (employeeId integer not null auto_increment, name varchar(255), primary key (employeeId)) engine=InnoDB
+create table FullTimeEmployee (salary integer, employeeId integer not null, primary key (employeeId)) engine=InnoDB
+create table PartTimeEmployee (hourlyWage float, employeeId integer not null, primary key (employeeId)) engine=InnoDB
+alter table FullTimeEmployee add constraint FKhswwgg4gj8f6wu56853u2ey7g foreign key (employeeId) references Employee (employeeId)
+alter table PartTimeEmployee add constraint FKxakb71b3ngaccwbj5ew739y6 foreign key (employeeId) references Employee (employeeId)
+
+insert into Employee (name) values (?)
+insert into FullTimeEmployee (salary, employeeId) values (?, ?)
+insert into Employee (name) values (?)
+insert into PartTimeEmployee (hourlyWage, employeeId) values (?, ?)
+```
+
+**MappedSuperclass**
+```
+create table FullTimeEmployee (employeeId integer not null auto_increment, name varchar(255), salary integer, primary key (employeeId)) engine=InnoDB
+create table PartTimeEmployee (employeeId integer not null auto_increment, name varchar(255), hourlyWage float, primary key (employeeId)) engine=InnoDB
+
+insert into FullTimeEmployee (name, salary) values (?, ?)
+insert into PartTimeEmployee (name, hourlyWage) values (?, ?)
+```
+
