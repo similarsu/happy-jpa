@@ -18,9 +18,13 @@
         <class>net.similarsu.learn.jpa.base.po.inheritance.abstractentity.FullTimeEmployee</class>
         <class>net.similarsu.learn.jpa.base.po.inheritance.abstractentity.PartTimeEmployee</class>-->
 
-        <class>net.similarsu.learn.jpa.base.po.inheritance.mappedsuperclass.Employee</class>
+        <!--<class>net.similarsu.learn.jpa.base.po.inheritance.mappedsuperclass.Employee</class>
         <class>net.similarsu.learn.jpa.base.po.inheritance.mappedsuperclass.FullTimeEmployee</class>
-        <class>net.similarsu.learn.jpa.base.po.inheritance.mappedsuperclass.PartTimeEmployee</class>
+        <class>net.similarsu.learn.jpa.base.po.inheritance.mappedsuperclass.PartTimeEmployee</class>-->
+
+        <class>net.similarsu.learn.jpa.base.po.inheritance.noentitysuperclass.Employee</class>
+        <class>net.similarsu.learn.jpa.base.po.inheritance.noentitysuperclass.FullTimeEmployee</class>
+        <class>net.similarsu.learn.jpa.base.po.inheritance.noentitysuperclass.PartTimeEmployee</class>
 
         <!--
          * AUTO 当验证提供程序在类路径上存在时,启用验证(默认).

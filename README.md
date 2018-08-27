@@ -346,3 +346,46 @@ public class PartTimeEmployee extends Employee {
 create table FullTimeEmployee (employeeId integer not null auto_increment, name varchar(255), salary integer, primary key (employeeId)) engine=InnoDB
 create table PartTimeEmployee (employeeId integer not null auto_increment, name varchar(255), hourlyWage float, primary key (employeeId)) engine=InnoDB
 ```
+
+## no entity superclass
+
+```
+Entities may have non-entity superclasses, and these superclasses can be either abstract or concrete.
+The state of non-entity superclasses is nonpersistent,
+and any state inherited from the non-entity superclass by an entity class is nonpersistent.
+Non-entity superclasses may not be used in EntityManager or Query operations.
+Any mapping or relationship annotations in non-entity superclasses are ignored.
+
+```
+
+```
+public class Employee {
+
+    protected String name;
+    ……
+}
+
+@Entity
+public class FullTimeEmployee extends Employee{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Integer employeeId;
+    protected Integer salary;
+
+
+}
+
+@Entity
+public class PartTimeEmployee extends Employee{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Integer employeeId;
+    protected Float hourlyWage;
+}
+```
+
+**建表语句**
+```
+create table FullTimeEmployee (employeeId integer not null auto_increment, salary integer, primary key (employeeId)) engine=InnoDB
+create table PartTimeEmployee (employeeId integer not null auto_increment, hourlyWage float, primary key (employeeId)) engine=InnoDB
+```

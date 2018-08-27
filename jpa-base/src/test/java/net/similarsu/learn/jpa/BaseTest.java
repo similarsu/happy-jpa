@@ -37,12 +37,14 @@ public class BaseTest {
 
     @Before
     public void before(){
+        System.out.println("@Before");
         entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
     }
 
     @After
     public void after(){
+        System.out.println("@After");
         entityTransaction.commit();
     }
 
