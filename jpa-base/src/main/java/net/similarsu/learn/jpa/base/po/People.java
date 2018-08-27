@@ -78,4 +78,7 @@ public final class People {
     public People(String colorStr) {
         this.colorStr = colorStr;
     }
+
+    public People() {
+    }
 }
