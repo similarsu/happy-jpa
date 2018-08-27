@@ -45,4 +45,15 @@ public class PeopleReopTest extends BaseTest {
 
     }
 
+    @Test
+    public void findByNamePosition(){
+        List<People> peopleList=
+                entityManager.createQuery("select p from net.similarsu.learn.jpa.base.po.People p where name=?1")
+                        .setParameter(1,"test")
+                        .setMaxResults(10)
+                        .getResultList();
+        assert peopleList.size()>0;
+
+    }
+
 }
