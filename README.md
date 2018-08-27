@@ -311,3 +311,38 @@ public abstract class Employee {
     ...
 }
 ```
+
+## @MappedSuperclass
+
+```
+Mapped superclasses cannot be queried and cannot be used in EntityManager or Query operations.
+You must use entity subclasses of the mapped superclass in EntityManager or Query operations.
+Mapped superclasses can’t be targets of entity relationships.
+Mapped superclasses can be abstract or concrete.
+```
+
+```
+@MappedSuperclass
+public abstract class Employee {
+    @Id
+    protected Integer employeeId;
+    ...
+}
+
+@Entity
+public class FullTimeEmployee extends Employee {
+    protected Integer salary;
+    ...
+}
+
+@Entity
+public class PartTimeEmployee extends Employee {
+    protected Float hourlyWage;
+}
+```
+
+**建表语句**
+```
+create table FullTimeEmployee (employeeId integer not null auto_increment, name varchar(255), salary integer, primary key (employeeId)) engine=InnoDB
+create table PartTimeEmployee (employeeId integer not null auto_increment, name varchar(255), hourlyWage float, primary key (employeeId)) engine=InnoDB
+```
