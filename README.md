@@ -272,13 +272,11 @@ public abstract class Employee {
     protected Integer employeeId;
     ...
 }
-
 @Entity
 public class FullTimeEmployee extends Employee {
     protected Integer salary;
     ...
 }
-
 @Entity
 public class PartTimeEmployee extends Employee {
     protected Float hourlyWage;
@@ -291,9 +289,17 @@ public class PartTimeEmployee extends Employee {
 create table Employee (DTYPE varchar(31) not null, employeeId integer not null, name varchar(255),
 salary integer, hourlyWage float, primary key (employeeId)) engine=InnoDB
 ```
+
 会多生成DTYPE字段，用于鉴别子类（自动插入FullTimeEmployee或PartTimeEmployee）
 
-### @DiscriminatorColumn
+
+#### @Inheritance
+
+**@Inheritance only effect the supper class which use @Entity**
+
+##### SINGLE_TABLE
+
+**@DiscriminatorColumn**
 
 **改变生成的DTYPE字段**
 
@@ -310,9 +316,66 @@ public abstract class Employee {
 
     ...
 }
+
+
+```
+create table Employee (DTYPE varchar(31) not null, employeeId integer not null auto_increment, name varchar(255), salary integer, hourlyWage float, primary key (employeeId)) engine=InnoDB
+insert into Employee (name, salary, DTYPE) values (?, ?, 'FullTimeEmployee')
+insert into Employee (name, hourlyWage, DTYPE) values (?, ?, 'PartTimeEmployee')
 ```
 
-## @MappedSuperclass
+##### TABLE_PER_CLASS
+**like the way use of @MappedSuperclass**
+
+**Support for this strategy is optional and may not be supported by all Java Persistence API providers.**
+**The default Java Persistence API provider in GlassFish Server does not support this strategy.**
+
+
+```
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Integer employeeId;
+    protected String name;
+    ……
+}
+```
+
+**@GeneratedValue(strategy = GenerationType.IDENTITY) must be not use**
+
+```
+create table FullTimeEmployee (employeeId integer not null, name varchar(255), salary integer, primary key (employeeId)) engine=InnoDB
+create table hibernate_sequence (next_val bigint) engine=InnoDB
+insert into hibernate_sequence values ( 1 )
+create table PartTimeEmployee (employeeId integer not null, name varchar(255), hourlyWage float, primary key (employeeId)) engine=InnoDB
+select next_val as id_val from hibernate_sequence for update
+update hibernate_sequence set next_val= ? where next_val=?
+select next_val as id_val from hibernate_sequence for update
+update hibernate_sequence set next_val= ? where next_val=?
+insert into FullTimeEmployee (name, salary, employeeId) values (?, ?, ?)
+insert into PartTimeEmployee (name, hourlyWage, employeeId) values (?, ?, ?)
+```
+
+##### JOINED
+
+```
+create table Employee (employeeId integer not null auto_increment, name varchar(255), primary key (employeeId)) engine=InnoDB
+create table FullTimeEmployee (salary integer, employeeId integer not null, primary key (employeeId)) engine=InnoDB
+create table PartTimeEmployee (hourlyWage float, employeeId integer not null, primary key (employeeId)) engine=InnoDB
+alter table FullTimeEmployee add constraint FKhswwgg4gj8f6wu56853u2ey7g foreign key (employeeId) references Employee (employeeId)
+alter table PartTimeEmployee add constraint FKxakb71b3ngaccwbj5ew739y6 foreign key (employeeId) references Employee (employeeId)
+
+insert into Employee (name) values (?)
+insert into FullTimeEmployee (salary, employeeId) values (?, ?)
+insert into Employee (name) values (?)
+insert into PartTimeEmployee (hourlyWage, employeeId) values (?, ?)
+```
+
+### @MappedSuperclass
+
+**@Inheritance can not effect the supper class which use @MappedSuperclass**
 
 ```
 Mapped superclasses cannot be queried and cannot be used in EntityManager or Query operations.
@@ -347,7 +410,7 @@ create table FullTimeEmployee (employeeId integer not null auto_increment, name 
 create table PartTimeEmployee (employeeId integer not null auto_increment, name varchar(255), hourlyWage float, primary key (employeeId)) engine=InnoDB
 ```
 
-## no entity superclass
+### no entity superclass
 
 ```
 Entities may have non-entity superclasses, and these superclasses can be either abstract or concrete.
@@ -389,93 +452,5 @@ public class PartTimeEmployee extends Employee{
 create table FullTimeEmployee (employeeId integer not null auto_increment, salary integer, primary key (employeeId)) engine=InnoDB
 create table PartTimeEmployee (employeeId integer not null auto_increment, hourlyWage float, primary key (employeeId)) engine=InnoDB
 ```
-## @Inheritance
 
-### SINGLE_TABLE
-
-**Abstract Entities**
-
-```
-create table Employee (DTYPE varchar(31) not null, employeeId integer not null auto_increment, name varchar(255), salary integer, hourlyWage float, primary key (employeeId)) engine=InnoDB
-insert into Employee (name, salary, DTYPE) values (?, ?, 'FullTimeEmployee')
-insert into Employee (name, hourlyWage, DTYPE) values (?, ?, 'PartTimeEmployee')
-```
-
-**MappedSuperclass**
-
-```
-create table FullTimeEmployee (employeeId integer not null auto_increment, name varchar(255), salary integer, primary key (employeeId)) engine=InnoDB
-create table PartTimeEmployee (employeeId integer not null auto_increment, name varchar(255), hourlyWage float, primary key (employeeId)) engine=InnoDB
-insert into FullTimeEmployee (name, salary) values (?, ?)
-insert into PartTimeEmployee (name, hourlyWage) values (?, ?)
-```
-
-###TABLE_PER_CLASS
-
-**Support for this strategy is optional and may not be supported by all Java Persistence API providers.**
-**The default Java Persistence API provider in GlassFish Server does not support this strategy.**
-
-**Abstract Entities**
-
-```
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Employee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Integer employeeId;
-    protected String name;
-    ……
-}
-```
-
-**@GeneratedValue(strategy = GenerationType.IDENTITY) must be not use**
-
-```
-create table FullTimeEmployee (employeeId integer not null, name varchar(255), salary integer, primary key (employeeId)) engine=InnoDB
-create table hibernate_sequence (next_val bigint) engine=InnoDB
-insert into hibernate_sequence values ( 1 )
-create table PartTimeEmployee (employeeId integer not null, name varchar(255), hourlyWage float, primary key (employeeId)) engine=InnoDB
-select next_val as id_val from hibernate_sequence for update
-update hibernate_sequence set next_val= ? where next_val=?
-select next_val as id_val from hibernate_sequence for update
-update hibernate_sequence set next_val= ? where next_val=?
-insert into FullTimeEmployee (name, salary, employeeId) values (?, ?, ?)
-insert into PartTimeEmployee (name, hourlyWage, employeeId) values (?, ?, ?)
-```
-
-**MappedSuperclass**
-
-```
-create table FullTimeEmployee (employeeId integer not null auto_increment, name varchar(255), salary integer, primary key (employeeId)) engine=InnoDB
-create table PartTimeEmployee (employeeId integer not null auto_increment, name varchar(255), hourlyWage float, primary key (employeeId)) engine=InnoDB
-insert into FullTimeEmployee (name, salary) values (?, ?)
-insert into PartTimeEmployee (name, hourlyWage) values (?, ?)
-```
-
-###JOINED
-
-**Abstract Entities**
-
-```
-create table Employee (employeeId integer not null auto_increment, name varchar(255), primary key (employeeId)) engine=InnoDB
-create table FullTimeEmployee (salary integer, employeeId integer not null, primary key (employeeId)) engine=InnoDB
-create table PartTimeEmployee (hourlyWage float, employeeId integer not null, primary key (employeeId)) engine=InnoDB
-alter table FullTimeEmployee add constraint FKhswwgg4gj8f6wu56853u2ey7g foreign key (employeeId) references Employee (employeeId)
-alter table PartTimeEmployee add constraint FKxakb71b3ngaccwbj5ew739y6 foreign key (employeeId) references Employee (employeeId)
-
-insert into Employee (name) values (?)
-insert into FullTimeEmployee (salary, employeeId) values (?, ?)
-insert into Employee (name) values (?)
-insert into PartTimeEmployee (hourlyWage, employeeId) values (?, ?)
-```
-
-**MappedSuperclass**
-```
-create table FullTimeEmployee (employeeId integer not null auto_increment, name varchar(255), salary integer, primary key (employeeId)) engine=InnoDB
-create table PartTimeEmployee (employeeId integer not null auto_increment, name varchar(255), hourlyWage float, primary key (employeeId)) engine=InnoDB
-
-insert into FullTimeEmployee (name, salary) values (?, ?)
-insert into PartTimeEmployee (name, hourlyWage) values (?, ?)
-```
 
