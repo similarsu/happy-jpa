@@ -389,3 +389,23 @@ public class PartTimeEmployee extends Employee{
 create table FullTimeEmployee (employeeId integer not null auto_increment, salary integer, primary key (employeeId)) engine=InnoDB
 create table PartTimeEmployee (employeeId integer not null auto_increment, hourlyWage float, primary key (employeeId)) engine=InnoDB
 ```
+## @Inheritance
+
+### SINGLE_TABLE
+
+**Abstract Entities**
+
+```
+create table Employee (DTYPE varchar(31) not null, employeeId integer not null auto_increment, name varchar(255), salary integer, hourlyWage float, primary key (employeeId)) engine=InnoDB
+insert into Employee (name, salary, DTYPE) values (?, ?, 'FullTimeEmployee')
+insert into Employee (name, hourlyWage, DTYPE) values (?, ?, 'PartTimeEmployee')
+```
+
+**MappedSuperclass**
+
+```
+create table FullTimeEmployee (employeeId integer not null auto_increment, name varchar(255), salary integer, primary key (employeeId)) engine=InnoDB
+create table PartTimeEmployee (employeeId integer not null auto_increment, name varchar(255), hourlyWage float, primary key (employeeId)) engine=InnoDB
+insert into FullTimeEmployee (name, salary) values (?, ?)
+insert into PartTimeEmployee (name, hourlyWage) values (?, ?)
+```
