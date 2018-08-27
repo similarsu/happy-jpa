@@ -18,6 +18,7 @@ public class AbstractEntityTest extends BaseTest {
         fullTimeEmployee.setName("john");
         fullTimeEmployee.setSalary(3000);
         entityManager.persist(fullTimeEmployee);
+        System.out.println(fullTimeEmployee.hashCode());
 
         PartTimeEmployee partTimeEmployee = new PartTimeEmployee();
         partTimeEmployee.setName("Lily");

@@ -292,3 +292,22 @@ create table Employee (DTYPE varchar(31) not null, employeeId integer not null, 
 salary integer, hourlyWage float, primary key (employeeId)) engine=InnoDB
 ```
 会多生成DTYPE字段，用于鉴别子类（自动插入FullTimeEmployee或PartTimeEmployee）
+
+### @DiscriminatorColumn
+
+**改变生成的DTYPE字段**
+
+```
+@Entity
+@DiscriminatorColumn(
+        name = "emp_type",
+        discriminatorType = DiscriminatorType.INTEGER
+)
+public abstract class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Integer employeeId;
+
+    ...
+}
+```

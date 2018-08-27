@@ -1,11 +1,12 @@
 package net.similarsu.learn.jpa.base.po.inheritance.abstractentity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@DiscriminatorColumn(
+        name = "emp_type",
+        discriminatorType = DiscriminatorType.INTEGER
+)
 public abstract class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
