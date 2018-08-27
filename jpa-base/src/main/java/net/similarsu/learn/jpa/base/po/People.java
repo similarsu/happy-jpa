@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity(name = "tbl_people")
+@NamedQueries({
+        @NamedQuery(name="findByName",query = "select p from net.similarsu.learn.jpa.base.po.People p where name=:name")
+})
 public final class People {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

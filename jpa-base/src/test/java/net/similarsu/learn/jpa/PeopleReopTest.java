@@ -56,4 +56,14 @@ public class PeopleReopTest extends BaseTest {
 
     }
 
+    @Test
+    public void findByNameQuery(){
+        List<People> peopleList=
+                entityManager.createNamedQuery("findByName")
+                        .setParameter("name","test")
+                        .setMaxResults(10)
+                        .getResultList();
+        assert peopleList.size()>0;
+    }
+
 }
