@@ -409,3 +409,47 @@ create table PartTimeEmployee (employeeId integer not null auto_increment, name 
 insert into FullTimeEmployee (name, salary) values (?, ?)
 insert into PartTimeEmployee (name, hourlyWage) values (?, ?)
 ```
+
+###TABLE_PER_CLASS
+
+**Support for this strategy is optional and may not be supported by all Java Persistence API providers.**
+**The default Java Persistence API provider in GlassFish Server does not support this strategy.**
+
+**Abstract Entities**
+
+```
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Integer employeeId;
+    protected String name;
+    ……
+}
+```
+
+**@GeneratedValue(strategy = GenerationType.IDENTITY) must be not use**
+
+```
+create table FullTimeEmployee (employeeId integer not null, name varchar(255), salary integer, primary key (employeeId)) engine=InnoDB
+create table hibernate_sequence (next_val bigint) engine=InnoDB
+insert into hibernate_sequence values ( 1 )
+create table PartTimeEmployee (employeeId integer not null, name varchar(255), hourlyWage float, primary key (employeeId)) engine=InnoDB
+select next_val as id_val from hibernate_sequence for update
+update hibernate_sequence set next_val= ? where next_val=?
+select next_val as id_val from hibernate_sequence for update
+update hibernate_sequence set next_val= ? where next_val=?
+insert into FullTimeEmployee (name, salary, employeeId) values (?, ?, ?)
+insert into PartTimeEmployee (name, hourlyWage, employeeId) values (?, ?, ?)
+```
+
+**MappedSuperclass**
+
+```
+create table FullTimeEmployee (employeeId integer not null auto_increment, name varchar(255), salary integer, primary key (employeeId)) engine=InnoDB
+create table PartTimeEmployee (employeeId integer not null auto_increment, name varchar(255), hourlyWage float, primary key (employeeId)) engine=InnoDB
+insert into FullTimeEmployee (name, salary) values (?, ?)
+insert into PartTimeEmployee (name, hourlyWage) values (?, ?)
+```
+
