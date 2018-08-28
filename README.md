@@ -316,7 +316,7 @@ public abstract class Employee {
 
     ...
 }
-
+```
 
 ```
 create table Employee (DTYPE varchar(31) not null, employeeId integer not null auto_increment, name varchar(255), salary integer, hourlyWage float, primary key (employeeId)) engine=InnoDB
