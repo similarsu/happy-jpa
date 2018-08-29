@@ -8,3 +8,15 @@ spring:
     min-idle: 5
     initial-size: 5
     max-wait: 10000
+  jpa:
+    show_sql: true # 展示sql语句
+    hibernate:
+      ddl-auto: update
+      naming:
+              physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect  #不加这句则默认为myisam引擎
+
+
