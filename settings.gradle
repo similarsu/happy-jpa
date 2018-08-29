@@ -1,3 +1,4 @@
 rootProject.name = 'happy-jpa'
 include 'jpa-base'
+include 'spring-data-jpa'
 
