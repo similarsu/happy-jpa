@@ -453,4 +453,50 @@ create table FullTimeEmployee (employeeId integer not null auto_increment, salar
 create table PartTimeEmployee (employeeId integer not null auto_increment, hourlyWage float, primary key (employeeId)) engine=InnoDB
 ```
 
+## Criteria API && Metamodel
 
+### define metamodel
+
+```
+@Entity
+public class Pet {
+    @Id
+    protected Long id;
+    protected String name;
+    protected String color;
+    @ManyToOne
+    protected Set<Person> owners;
+    ...
+}
+
+@StaticMetamodel(Pet.class)
+public class Pet_ {
+
+    public static volatile SingularAttribute<Pet, Long> id;
+    public static volatile SingularAttribute<Pet, String> name;
+    public static volatile SingularAttribute<Pet, String> color;
+    public static volatile SetAttribute<Pet, Person> owners;
+}
+```
+
+### obtain metamodel class
+
+```
+Call the getModel method on the query root object
+or
+Obtain an instance of the Metamodel interface and then pass the entity type to the instance’s entity method
+```
+
+```
+EntityManager em = ...;
+CriteriaBuilder cb = em.getCriteriaBuilder();
+CriteriaQuery cq = cb.createQuery(Pet.class);
+Root<Pet> pet = cq.from(Pet.class);
+EntityType<Pet> Pet_ = pet.getModel();
+```
+
+```
+EntityManager em = ...;
+Metamodel m = em.getMetamodel();
+EntityType<Pet> Pet_ = m.entity(Pet.class);
+```

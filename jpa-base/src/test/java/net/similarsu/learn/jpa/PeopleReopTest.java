@@ -8,6 +8,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -73,6 +75,29 @@ public class PeopleReopTest extends BaseTest {
     public void findAll(){
         CriteriaQuery<People> criteriaQuery= criteriaBuilder.createQuery(People.class);
         Root<People> peopleRoot = criteriaQuery.from(People.class);
+        //criteriaQuery.select(peopleRoot);
+        TypedQuery<People> peopleTypedQuery = entityManager.createQuery(criteriaQuery);
+        List<People> peopleList = peopleTypedQuery.getResultList();
+        assert peopleList.size() > 0 ;
+    }
+
+    @Test
+    public void getMetaDataFromRoot(){
+        CriteriaQuery<People> criteriaQuery= criteriaBuilder.createQuery(People.class);
+        Root<People> peopleRoot = criteriaQuery.from(People.class);
+        EntityType<People> People_=peopleRoot.getModel();
+        //criteriaQuery.select(peopleRoot);
+        TypedQuery<People> peopleTypedQuery = entityManager.createQuery(criteriaQuery);
+        List<People> peopleList = peopleTypedQuery.getResultList();
+        assert peopleList.size() > 0 ;
+    }
+
+    @Test
+    public void getMetaDataFromEm(){
+        CriteriaQuery<People> criteriaQuery= criteriaBuilder.createQuery(People.class);
+        Root<People> peopleRoot = criteriaQuery.from(People.class);
+        Metamodel metamodel=entityManager.getMetamodel();
+        EntityType<People> People_=metamodel.entity(People.class);
         //criteriaQuery.select(peopleRoot);
         TypedQuery<People> peopleTypedQuery = entityManager.createQuery(criteriaQuery);
         List<People> peopleList = peopleTypedQuery.getResultList();
