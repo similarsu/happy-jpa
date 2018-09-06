@@ -5,6 +5,9 @@ import net.similarsu.learn.jpa.base.po.People;
 import org.junit.Test;
 
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -64,6 +67,16 @@ public class PeopleReopTest extends BaseTest {
                         .setMaxResults(10)
                         .getResultList();
         assert peopleList.size()>0;
+    }
+
+    @Test
+    public void findAll(){
+        CriteriaQuery<People> criteriaQuery= criteriaBuilder.createQuery(People.class);
+        Root<People> peopleRoot = criteriaQuery.from(People.class);
+        //criteriaQuery.select(peopleRoot);
+        TypedQuery<People> peopleTypedQuery = entityManager.createQuery(criteriaQuery);
+        List<People> peopleList = peopleTypedQuery.getResultList();
+        assert peopleList.size() > 0 ;
     }
 
 }

@@ -9,11 +9,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
 
 public class BaseTest {
     private static EntityManagerFactory entityManagerFactory;
 
     protected static EntityManager entityManager;
+
+    protected static CriteriaBuilder criteriaBuilder;
 
     private EntityTransaction entityTransaction;
 
@@ -22,6 +25,7 @@ public class BaseTest {
         System.out.println("@BeforeClass");
         entityManagerFactory= Persistence.createEntityManagerFactory("school_crm");
         entityManager=entityManagerFactory.createEntityManager();
+        criteriaBuilder = entityManager.getCriteriaBuilder();
     };
 
     @AfterClass
